@@ -109,36 +109,36 @@ Sample:
 For more informations about the script run **script_name.sh** without any argument.
 
 - Script to create a kafka connector using kafka-connect API REST
-    > [connector_create.sh](connector_create.sh)
+    > [connector_create.sh](./docker/shell/connector_create.sh)
 - Script to update a kafka connector using kafka-connect API REST
-    > [connector_update.sh](connector_update.sh)
+    > [connector_update.sh](./docker/shell/connector_update.sh)
 - Script to delete a kafka connector using kafka-connect API REST
-    > [connector_delete.sh](connector_delete.sh)
+    > [connector_delete.sh](./docker/shell/connector_delete.sh)
 
 
 - Script to consume messages in AVRO from kafka using kafka-console-consumer 
-    > [consumer_avro.sh](connector_avro.sh)
+    > [consumer_avro.sh](./docker/shell/connector_avro.sh)
 - Script to consume messages from kafka using kafka-console-consumer 
-    > [consumer.sh](consumer.sh)    
+    > [consumer.sh](./docker/shell/consumer.sh)    
 
 
 - Script to set the environment of confluent cloud
-    > [environment_set.sh](environment_set.sh)
+    > [environment_set.sh](./docker/shell/environment_set.sh)
 
 - Script to create schema(s) on confluent cloud schema registry of environment set, schemas must be in a [schemas](./schemas/) folder
-    > [schema_create.sh](schema_create.sh)
+    > [schema_create.sh](./docker/shell/schema_create.sh)
 
 - Script to delete schema(s) on confluent cloud schema registry of environment set
-    > [schema_delete.sh](schema_delete.sh)
+    > [schema_delete.sh](./docker/shell/schema_delete.sh)
 
 - Script to create topic(s) on confluent cloud kafka cluster of environment set, topics must be in a [topicos.txt](./topics/topicos.txt)
-    > [topic_create.sh](topic_create.sh)    
+    > [topic_create.sh](./docker/shell/topic_create.sh)    
 
 - Script to delete topic(s) on confluent cloud kafka cluster of environment set
-    > [topic_delete.sh](topic_delete.sh)      
+    > [topic_delete.sh](./docker/shell/topic_delete.sh)      
 
 - Script to recreate a topic and schema on confluent cloud kafka cluster / schema registry of environment set
-    > [topic_schema_recreate.sh](topic_schema_recreate.sh)  
+    > [topic_schema_recreate.sh](./docker/shell/topic_schema_recreate.sh)  
 
 ## Samples
 ### Schema AVRO of topic for schema registry
@@ -179,7 +179,7 @@ A value schema sample:
         "type": "string"
       },
       {
-        "name": "recordGroup",
+        "name": "recordGroup"### Topic file sample to use with script to create many topics at one time,
         "doc" : "Grupos de conta (Legal, Cost, Revenue, Customer)",
         "type": [
           "null",
