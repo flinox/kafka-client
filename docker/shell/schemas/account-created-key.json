@@ -1,0 +1,14 @@
+{
+    "type": "record",
+    "name": "account_created",
+    "namespace": "br.com.flinox",
+    "doc": "{\"description\":\"Este evento representa a criação de uma conta.\",\"topic\":\"account-created\",\"author_team\":\"Kapa\",\"author_name\":\"Kapa\",\"author_email\":\"kapacitordefluxo@flinox.com.br\",\"support_name\":\"Kapa\",\"support_phone\":\"---\",\"support_email\":\"kapacitordefluxo@flinox.com.br\",\"schema_context\":\"br.com.flinox\"}",
+    "fields": [
+      {
+        "name": "id",
+        "doc" : "Identificador único da conta. Utilizar prefixo AC-<chave_hash>",
+        "type": "string"
+      }
+    ],
+    "connect.name": "br.com.flinox.account_created"
+  }

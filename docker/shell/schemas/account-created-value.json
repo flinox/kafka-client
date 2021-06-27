@@ -1,0 +1,63 @@
+{
+    "type": "record",
+    "name": "account_created",
+    "namespace": "br.com.flinox",
+    "doc": "{\"description\":\"Este evento representa a criação de uma conta.\",\"topic\":\"account-created\",\"author_team\":\"Kapa\",\"author_name\":\"Kapa\",\"author_email\":\"kapacitordefluxo@flinox.com.br\",\"support_name\":\"Kapa\",\"support_phone\":\"---\",\"support_email\":\"kapacitordefluxo@flinox.com.br\",\"schema_context\":\"br.com.flinox\"}",
+    "fields": [
+      {
+        "name": "id",
+        "doc" : "Identificador único da conta. Utilizar prefixo AC-<chave_hash>",
+        "type": "string"
+      },
+      {
+        "name": "recordType",
+        "doc" : "Tipos de conta (Organização Empresarial, Programa Acadêmico, Administrativo, Familiar, Instituição de Ensino, etc)",
+        "type": "string"
+      },
+      {
+        "name": "recordGroup",
+        "doc" : "Grupos de conta (Legal, Cost, Revenue, Customer)",
+        "type": [
+          "null",
+          "string"
+        ],
+        "default": null 
+      },
+      {
+        "name": "name",
+        "doc" : "Nome da conta",
+        "type": [
+          "null",
+          "string"
+        ],
+        "default": null 
+      },
+      {
+        "name": "code",
+        "doc" : "Código interno (sistema) para uma determinada conta. Exemplo, necessário ter um código do JAC. Não obrigatório", 
+        "type": [
+          "null",
+          "string"
+        ],
+        "default": null 
+      },
+      {
+        "name": "createdAt",
+        "doc" : "Unix epoch da data/hora de criação",
+        "type": [
+          {
+            "type": "long",
+            "connect.version": 1,
+            "connect.name": "org.apache.kafka.connect.data.Timestamp",
+            "logicalType": "timestamp-millis"
+          }
+        ]
+      },
+      {
+        "name": "userCreated",
+        "doc" : "Nome do usuário que criou a conta",
+        "type": "string"
+      }
+    ],
+    "connect.name": "br.com.flinox.account_created"
+  }
