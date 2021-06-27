@@ -140,7 +140,8 @@ For more informations about the script run **script_name.sh** without any argume
 - Script to recreate a topic and schema on confluent cloud kafka cluster / schema registry of environment set
     > [topic_schema_recreate.sh](topic_schema_recreate.sh)  
 
-### Schema file sample
+## Samples
+### Schema AVRO of topic for schema registry
 A key schema sample:
 ```
 {
@@ -226,7 +227,7 @@ A value schema sample:
   }
 ```
 
-### Topic file sample
+### Topic file sample to use with script to create many topics at one time
 ```
 account-created                10   3
 account-updated                10   3
@@ -235,5 +236,69 @@ First argument is topic name
 Second argument is partition(s)
 Third argument is replica(s)
 
+### Connector file sample
+```
+name=snk-topic-name-to-oracledb
+connector.class=io.confluent.connect.jdbc.JdbcSinkConnector
+connection.url=${file:/data/cretendials.properties:CONNECTION_STRING}
+connection.user=${file:/data/cretendials.properties:USERNAME}
+connection.password=${file:/data/cretendials.properties:PASSWORD}
+
+key.converter=org.apache.kafka.connect.storage.StringConverter
+key.converter.schemas.enable=false
+
+value.converter=io.confluent.connect.avro.AvroConverter
+value.converter.schemas.enable=false
+value.converter.basic.auth.credentials.source=USER_INFO
+value.converter.schema.registry.url=https://host.region.azure.confluent.cloud
+value.converter.schema.registry.basic.auth.user.info=${file:/data/cretendials.properties:SCHEMA_REGISTRY_KEY}
+
+dialect.name=OracleDatabaseDialect
+table.name.format=OWNER.TABLE_NAME
+topics=topic-name
+tasks.max=1
+batch.size=500
+max.retries=3
+
+errors.log.enable=true
+errors.log.include.messages=true
+errors.tolerance=all
+errors.deadletterqueue.context.headers.enable=true
+errors.deadletterqueue.topic.name=dlq-topic-name
+
+consumer.enable.auto.commit=false
+consumer.auto.offset.reset=earliest
+consumer.offset.flush.timeout.ms=120000
+offset.flush.timeout.ms=120000
+
+
+schema.ignore=true
+auto.create=false
+auto.evolve=false
+insert.mode=insert
+#pk.mode=record_value
+#pk.fields=PSPNR,PBUKR
+
+validate.non.null=false
+numeric.mapping=best_fit
+
+# Trata Campos
+transforms=TransformFields,MappingFields,RemoveFields,InsertFields
+transforms.TransformFields.type=org.apache.kafka.connect.transforms.Cast$Value
+transforms.TransformFields.spec=CAMPO6:FLOAT64
+
+# De Para Campos
+transforms.MappingFields.type=org.apache.kafka.connect.transforms.ReplaceField$Value
+transforms.MappingFields.renames=CAMPODE1:CAMPOPARA1,CAMPODE2:CAMPOPARA2
+
+# Remove Campos
+transforms.RemoveFields.type=org.apache.kafka.connect.transforms.ReplaceField$Value
+transforms.RemoveFields.blacklist=CAMPO3,CAMPO4
+
+# Insere Campos
+transforms.InsertFields.type=org.apache.kafka.connect.transforms.InsertField$Value
+transforms.InsertFields.static.field=CAMPO5
+transforms.InsertFields.static.value=Integrado
+```
 
 [https://br.linkedin.com/in/flinox](https://br.linkedin.com/in/flinox)
