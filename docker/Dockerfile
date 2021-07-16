@@ -33,4 +33,7 @@ RUN pip3 install -r /app/requirements.txt
 RUN echo "alias ls='ls -lh --color=auto'" >> /root/.bashrc
 RUN echo "export PS1=\"[ \[\e[0;34m\]Kafka Client $(date +'%d/%m/%Y %H:%M:%S')\[\e[m\] \[\e[1;37m\]\w\[\e[m\] ] \"" >> /root/.bashrc
 
+# Configurar ambiente
+RUN echo ". ./shell/environment_set.sh"  >> /root/.bashrc
+
 

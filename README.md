@@ -31,7 +31,7 @@ print.schema.ids=true
 ```
 
 
-### Create a file **environment.properties** inside **_keys**
+### Create 2 files **env-dev.properties** and **env-hml.properties** with the keys for each envinroment inside **_keys**
 This file will be used for your python consumer/producer.
 ```
 kafka-broker=<kafka-host>:9092
@@ -42,7 +42,6 @@ schemaregistry-url=https://<schema-registry-url>
 schemaregistry-username=<ccloud-sr-api-key>
 schemaregistry-password=<ccloud-sr-api-secret>
 
-# DEV
 ccloud-environment=<ccloud-environment-key>
 ccloud-cluster=<ccloud-cluster-key>
 ```
@@ -96,14 +95,14 @@ The program is ready to produce messages in avro topic, according to the topic y
 
 Sample:
 
-![Python Producer](producer.png)
+![Python Producer](images/producer.png)
 
 ### Python consumer app
 The program is ready to consume messages of avro/json topic, returning inclusive the partition and offset.
 
 Sample:
 
-![Python Consumer](consumer.png)
+![Python Consumer](images/consumer.png)
 
 ### Shell scripts (linux)
 For more informations about the script run **script_name.sh** without any argument.

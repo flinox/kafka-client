@@ -4,6 +4,7 @@ function sintaxe {
     echo ""
     echo "Script para configuração do ambiente de trabalho na confluent cloud"
     echo "v1 - 02/2021 - Fernando Lino Di Tomazzo Silva - https://www.linkedin.com/in/flinox"
+    echo "v2 - 07/2021 - Fernando Lino Di Tomazzo Silva - https://www.linkedin.com/in/flinox"    
     echo ""
     echo "Exemplo:"    
     echo ". ./environment_set.sh"
@@ -20,17 +21,41 @@ case $1 in
         sintaxe
         exit 1
     ;;
+
+   *)
+
+        if [ ! -f "/app/_keys/env-dev.properties" ] || [ ! -f "/app/_keys/env-hml.properties" ]  ; then
+            echo "Você não configurou seus arquivos com suas keys para os ambientes\nConsulte o README.md para mais informações!"
+            exit 1
+        fi
 esac
 
 clear
-PROPERTIES=../_keys/environment.properties
+PS3='Escolha o ambiente CCLOUD que quer acessar: '
+options=("DEV" "HML")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "DEV")
+            echo "Configurando para ambiente de DEV"
+            export PROPERTIES=/app/_keys/env-dev.properties
+            break
+            ;;
+        "HML")
+            echo "Configurando para ambiente de HML"
+            export PROPERTIES=/app/_keys/env-hml.properties
+            break
+            ;;
+        *) echo "opcao inválida $REPLY";;
+    esac
+done
 
 cp /app/_keys/netrc ~/.netrc
 chmod 600 ~/.netrc
 
 ccloud environment use $(prop 'ccloud-environment')
 ccloud kafka cluster use $(prop 'ccloud-cluster')
-ccloud api-key store $(prop 'schemaregistry-username') $(prop 'schemaregistry-password') --resource $(prop 'ccloud-cluster')
+#ccloud api-key store $(prop 'schemaregistry-username') $(prop 'schemaregistry-password') --resource $(prop 'ccloud-cluster')
 ccloud api-key store $(prop 'kafka-username') $(prop 'kafka-password') --resource $(prop 'ccloud-cluster')
 ccloud api-key use $(prop 'kafka-username') --resource $(prop 'ccloud-cluster')
 
