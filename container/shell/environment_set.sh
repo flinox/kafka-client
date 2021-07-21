@@ -39,16 +39,20 @@ do
         "DEV")
             echo "Configurando para ambiente de DEV"
             export PROPERTIES=/app/_keys/env-dev.properties
+            export KAFKACAT_CONFIG=/app/_keys/consumer-dev.properties
             break
             ;;
         "HML")
             echo "Configurando para ambiente de HML"
             export PROPERTIES=/app/_keys/env-hml.properties
+            export KAFKACAT_CONFIG=/app/_keys/consumer-hml.properties
             break
             ;;
         *) echo "opcao inválida $REPLY";;
     esac
 done
+
+alias kafkacat-ccloud='kafkacat -b $(echo $(prop "kafka-broker") | sed s/"http[s]\?:\/\/"//) -X security.protocol=sasl_ssl -X sasl.mechanisms=PLAIN -X sasl.username=$(prop "kafka-username")  -X sasl.password=$(prop "kafka-password") -L'
 
 cp /app/_keys/netrc ~/.netrc
 chmod 600 ~/.netrc

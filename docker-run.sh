@@ -1,4 +1,6 @@
 #!/bin/bash
+cd container
+
 docker build -t flinox/kafka-client:latest .
 
 docker run --rm -it --hostname kafka-client --name kafka-client \
@@ -8,3 +10,5 @@ docker run --rm -it --hostname kafka-client --name kafka-client \
 -p 8080:8080 \
 flinox/kafka-client:latest \
 /bin/bash
+
+cd ..

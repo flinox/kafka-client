@@ -1,5 +1,5 @@
 # kafka-client
-Many tools to support your work with Kafka
+Many tools to support your work with Kafka and environment on Confluent Cloud!
 suggestions, ideas or improvements please contact me!
 [https://br.linkedin.com/in/flinox](https://br.linkedin.com/in/flinox)
 if you like it or if it helped you in any way, please leave a STAR!
@@ -86,9 +86,23 @@ or
 ```
 ./docker-run.sh
 ```
+and just select your environment to work:
+
+![select](images/select-environment.png)
+
+
+
 
 
 ## The Tools
+
+### Kafkacat
+I put the great tool kafkacat from [https://github.com/edenhill/kafkacat](https://github.com/edenhill/kafkacat) and set this tool to work with confluent broker ( because it needs to pass api key and secret ), then you just need to run **kafkacat-ccloud** to run at your environment set, sample:
+```
+kafkacat-ccloud -t connect-offsets -C -K# -o 0 -v
+```
+
+
 
 ### Python producer app
 The program is ready to produce messages in avro topic, according to the topic you enter it will fetch the latest version of the schema from the schema registry and will ask you for each of the fields in the schema, so that you can produce a message manually but accordingly with the topic schema.
@@ -299,5 +313,11 @@ transforms.InsertFields.type=org.apache.kafka.connect.transforms.InsertField$Val
 transforms.InsertFields.static.field=CAMPO5
 transforms.InsertFields.static.value=Integrado
 ```
+
+## References
+https://github.com/edenhill/kafkacat
+https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html
+https://www.confluent.io/blog/kafka-connect-deep-dive-converters-serialization-explained/#finding-connect-worker-log
+
 
 [https://br.linkedin.com/in/flinox](https://br.linkedin.com/in/flinox)

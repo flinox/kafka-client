@@ -6,6 +6,7 @@ ARG CONFLUENT_COMMUNITY_VERSION=6.1.1
 ENV TZ=America/Sao_Paulo
 ENV PATH ${PATH}:/opt/confluent-${CONFLUENT_COMMUNITY_VERSION}/bin
 
+# Generic Tools
 RUN apt-get update
 RUN apt-get install -y apt-utils telnet netcat git jq nano
 
@@ -28,6 +29,9 @@ RUN echo "alias python=python3" >> /root/.bashrc
 RUN echo "alias pip=pip3" >> /root/.bashrc
 COPY ./python/requirements.txt /app
 RUN pip3 install -r /app/requirements.txt
+
+# Kafka tools
+RUN apt-get install -y kafkacat
 
 # Customizing
 RUN echo "alias ls='ls -lh --color=auto'" >> /root/.bashrc

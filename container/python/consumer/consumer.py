@@ -197,7 +197,6 @@ def show_messages(params):
                     print(msg.value())
                     
             else:
-                print(type(msg.value()))
                 print('    Key      :',msg.key())
                 print('    Message  :',msg.value())
 
