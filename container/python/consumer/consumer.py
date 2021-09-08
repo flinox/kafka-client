@@ -16,7 +16,7 @@
 ## 
 ## python consumer.py account-created AVRO --keyserialized True --groupid kapacitor --offset latest
 
-from datetime import datetime
+import datetime
 from confluent_kafka.serialization import StringDeserializer
 from confluent_kafka import DeserializingConsumer
 from confluent_kafka.schema_registry import SchemaRegistryClient
@@ -26,7 +26,13 @@ import json
 import argparse
 import re
 import os
+import decimal
 
+def default(o):
+    if isinstance(o, (datetime.date, datetime.datetime)):
+        return o.strftime('%d/%m/%Y %H:%M:%S')
+    elif isinstance(o, (decimal.Decimal)):
+        return '{0:.3f}'.format(o)
 
 def getProperties(key=''):
     
@@ -189,10 +195,11 @@ def show_messages(params):
             if params['messagetype'] == 'AVRO':
 
                 if type(msg.value()) is dict:
-                    for k, v in msg.value().items():
-                        print('    Key  :',k)
-                        print('    Value:',v)
-                        print('    ===============================================================')            
+                    print(json.dumps(msg.value(), indent=4, sort_keys=True, default=default))
+                    # for k, v in msg.value().items():
+                    #     print('    Key  :',k)
+                    #     print('    Value:',v)
+                    #     print('    ===============================================================')
                 else:
                     print(msg.value())
                     
@@ -229,15 +236,12 @@ def waiting(retry,tries):
     return tries
 
 
-
-
-
 # BEGIN
 ########################################################################################################
 
 # Pega os parametros informados
 print('#'*80)
-print('   Iniciado o programa as ',datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+print('   Iniciado o programa as ',datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
 retry = 10
 tries = 5
@@ -271,7 +275,7 @@ while True:
 if not Error:
     show_messages(params)
 else:
-    print('    Encerrando o programa as ',datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    print('    Encerrando o programa as ',datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     print('#'*80)
     exit(1)     
 

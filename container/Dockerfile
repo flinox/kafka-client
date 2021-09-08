@@ -3,7 +3,7 @@ FROM openjdk:11.0.9.1-jre
 ARG CONFLUENT_MAJOR_VERSION=6.1
 ARG CONFLUENT_COMMUNITY_VERSION=6.1.1
 
-ENV TZ=America/Sao_Paulo
+ENV TZ=UTC
 ENV PATH ${PATH}:/opt/confluent-${CONFLUENT_COMMUNITY_VERSION}/bin
 
 # Generic Tools
@@ -31,7 +31,12 @@ COPY ./python/requirements.txt /app
 RUN pip3 install -r /app/requirements.txt
 
 # Kafka tools
-RUN apt-get install -y kafkacat
+#RUN apt-get install -y kafkacat
+
+RUN apt-get install -y git librdkafka-dev
+
+# Install kcat
+RUN mkdir -p git && cd git && git clone https://github.com/edenhill/kafkacat.git && cd kafkacat && ./configure && make && make install
 
 # Customizing
 RUN echo "alias ls='ls -lh --color=auto'" >> /root/.bashrc
